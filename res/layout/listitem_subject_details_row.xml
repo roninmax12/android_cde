@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="1.1.3"
+        android:id="@+id/tv_sd_Number"
+        android:textColor="#999"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="0dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:width="50dp"
+        android:singleLine="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="Title"
+        android:id="@+id/tv_sd_Title"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/tv_sd_Number"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:focusable="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="Рейтинг: "
+        android:id="@+id/tv_schedule_time"
+        android:layout_above="@+id/tv_sd_date"
+        android:layout_toRightOf="@+id/tv_sd_Number"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:textColor="#444"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="Срок сдачи:"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/tv_schedule_time"
+        android:layout_alignLeft="@+id/tv_schedule_time"
+        android:layout_alignStart="@+id/tv_schedule_time"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="10dp"
+        android:textColor="#444"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="5,56 из 20"
+        android:id="@+id/tv_sd_rate"
+        android:layout_below="@+id/tv_sd_Title"
+        android:layout_alignRight="@+id/tv_sd_Title"
+        android:layout_alignEnd="@+id/tv_sd_Title"
+        android:paddingTop="2dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="14.06.2014"
+        android:id="@+id/tv_sd_date"
+        android:layout_below="@+id/tv_sd_rate"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingTop="2dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp" />
+</RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentRecord_frameLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <WebView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/fragmentRecord_webView"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="load"
+        android:id="@+id/fragmentRecord_textView"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:textColor="#444"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentRecord_imageView"
+        android:src="@drawable/ifmo_logo_new"
+        android:visibility="invisible"
+        android:adjustViewBounds="false"
+        android:baselineAlignBottom="false"
+        android:layout_gravity="center" />
+
+</FrameLayout>

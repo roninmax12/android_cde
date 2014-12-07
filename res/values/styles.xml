@@ -1,0 +1,30 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:actionMenuTextColor">#fff</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_previous_item</item>
+        <item name="android:dialogTheme">@style/DialogTheme</item>
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="MySubTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">#a3b5e3</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#1946ba</item>
+        <item name="android:actionMenuTextColor">#fff</item>
+        <item name="android:titleTextStyle">@style/MyTitleTextStyle</item>
+        <item name="android:subtitleTextStyle">@style/MySubTitleTextStyle</item>
+        <item name="homeAsUpIndicator">@drawable/ic_action_previous_item</item>
+        <item name="android:icon">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogTheme" parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:textColor">#fff</item>
+    </style>
+
+</resources>

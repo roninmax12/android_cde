@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context="com.rudik_maksim.cde.ActivitySubjectDetails"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:id="@+id/activity_schedule_teacher_linLayout"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="Расписание не найдено. Нажмите на иконку почты, чтобы сообщить об этом разработчику."
+            android:textColor="@color/main_blue_color"/>
+
+        <ImageView
+            android:id="@+id/activity_schedule_teacher_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gmail_icon"
+            android:layout_gravity="center_horizontal"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ЦДО НИУ ИТМО</string>
+    <string name="app_version">2.1</string>
+    <string name="dev_name">Максим Рудик</string>
+    <string name="dev_mail">roninmax12@gmail.com</string>
+    <string name="dev_site">http://vk.com/maxim_rudik</string>
+    <string name="app_site">http://vk.com/cde_android</string>
+    <string name="menu_name">Меню</string>
+    <string name="signin">ЦДО НИУ ИТМО</string>
+    <string name="points">Электронный журнал</string>
+    <string name="title_fragmentPoints">Электронный журнал</string>
+    <string name="title_fragmentProtocol">Протокол изменений</string>
+    <string name="title_fragmentRating">Рейтинг</string>
+    <string name="title_fragmentRecord">Запись в ЦДО</string>
+    <string name="title_fragmentSchedule">Расписание занятий</string>
+    <string name="title_fragmentScheduleSession">Расписание сессии</string>
+    <string name="title_fragmentScheduleAttestation">Расписание аттестаций</string>>
+    <string name="title_fragmentSettings">Настройки</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">О программе</string>
+    <string name="action_choose_years">Год ▼</string>
+    <string name="title_activity_record_to_cde">Запись в ЦДО</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="authorization">Авторизация</string>
+
+</resources>

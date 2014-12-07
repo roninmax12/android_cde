@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentSchedule_imageView"
+        android:src="@drawable/ifmo_logo_new"
+        android:visibility="invisible"
+        android:adjustViewBounds="false"
+        android:baselineAlignBottom="false"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentSchedule_textView"
+        android:visibility="invisible"
+        android:adjustViewBounds="false"
+        android:baselineAlignBottom="false"
+        android:layout_gravity="center"
+        android:text="Занятий нет"
+        android:textColor="#444"
+        android:textSize="15dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/fragment_schedule_linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragmentSchedule_scrollView"
+            android:layout_marginTop="-10dp"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/fragmentSchedule_linearLayoutContainer"
+                android:clickable="false">
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</FrameLayout>

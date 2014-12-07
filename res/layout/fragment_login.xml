@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentLogin_linearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="#1946ba"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_ifmo_blue"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+        <EditText
+            android:id="@+id/editTextLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Логин"
+            android:textColorHint="#999"
+            android:textColor="#535456"
+            android:background="#fff"
+            android:padding="10dp"
+            android:textSize="15dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Пароль"
+            android:textColorHint="#999"
+            android:textColor="#535456"
+            android:layout_marginTop="5dp"
+            android:background="#fff"
+            android:padding="10dp"
+            android:textSize="15dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#eee"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Вход"
+            android:id="@+id/btnConnect"
+            android:background="@drawable/listview_item_states"
+            android:textStyle="bold"
+            android:textColor="#1946ba"
+            android:typeface="normal"
+            android:textSize="15dp"
+            android:padding="30dp"/>
+    </LinearLayout>
+
+</LinearLayout>
+
+<!--LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/fragmentLogin_linearLayout"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:padding="50dp"
+android:background="#fff"
+android:layout_gravity="top">
+
+<EditText
+    android:id="@+id/editTextLogin"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:inputType="number"
+    android:hint="Логин"
+    android:textColorHint="#999"
+    android:textColor="#535456"
+    android:padding="10dp"
+    />
+
+<EditText
+    android:id="@+id/editTextPassword"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:inputType="textPassword"
+    android:hint="Пароль"
+    android:textColorHint="#999"
+    android:textColor="#535456"
+    android:padding="10dp"
+    android:layout_marginTop="5dp"/>
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivIfmoLogo"
+        android:src="@drawable/ifmo_logo_new"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_vertical"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Вход"
+        android:id="@+id/btnConnect"
+        android:background="@drawable/button_loginactivity_states"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:typeface="normal"
+        android:layout_weight="2"
+        android:layout_margin="5dp"/>
+
+</LinearLayout>
+
+</LinearLayout-->

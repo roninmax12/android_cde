@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+
+    <LinearLayout
+        android:id="@+id/dialog_about_linLayout_applicationGooglePage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/listview_item_states"
+        android:clickable="true"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/google_play_icon3"
+            android:clickable="false"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:clickable="false">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Страница в Google Play"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:clickable="false"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Информация, отзывы, оценки"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:paddingTop="1dp"
+                android:clickable="false"
+                android:textColor="#000"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#eee"/>
+
+    <LinearLayout
+        android:id="@+id/dialog_about_linLayout_applicationPage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/listview_item_states"
+        android:clickable="true"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/vk_icon"
+            android:clickable="false"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:clickable="false">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Страница ВКонтакте"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:clickable="false"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Вопросы, пожелания, ошибки"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:paddingTop="1dp"
+                android:clickable="false"
+                android:textColor="#000"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#eee"/>
+
+    <LinearLayout
+        android:id="@+id/dialog_about_linLayout_developerPage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/listview_item_states"
+        android:clickable="true"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/developer_photo"
+            android:clickable="false"
+        />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:clickable="false">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Максим Рудик"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:clickable="false"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Разработчик приложения"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:paddingTop="1dp"
+                android:clickable="false"
+                android:textColor="#000"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

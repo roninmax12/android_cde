@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="Medium Text"
+        android:id="@+id/textViewNavDrawerItem"
+        android:textColor="#fff"
+        android:typeface="normal"
+        android:gravity="center_vertical|fill_vertical"
+        android:layout_alignParentTop="true"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:padding="15dp"
+        android:background="@drawable/navdrawer_item_colors"/>
+</LinearLayout>
