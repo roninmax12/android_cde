@@ -208,12 +208,14 @@ public class ActivityPoints extends ActionBarActivity
                     getMenuInflater().inflate(R.menu.menu_points, menu); break;
                 case Global.Configuration.NAV_SETTINGS:
                     getMenuInflater().inflate(R.menu.menu_settings, menu); break;
+                case Global.Configuration.NAV_SCHEDULE:
+                    getMenuInflater().inflate(R.menu.menu_schedule, menu); break;
             }
 
             return true;
         }
         return super.onCreateOptionsMenu(menu);
-}
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -231,6 +233,10 @@ public class ActivityPoints extends ActionBarActivity
                     Toast.makeText(this, "Дождитесь загрузки данных", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.action_schedule_teacher:
+                Intent i = new Intent(this, ActivityScheduleTeacher.class);
+                i.putExtra("search", true);
+                startActivity(i);
         }
        return super.onOptionsItemSelected(item);
     }

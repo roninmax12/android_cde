@@ -329,6 +329,30 @@ public class ScheduleTeacher {
             return "";
     }
 
+    public ArrayList<String> getSimilarTeachers(String s){
+        ArrayList<String> similar = new ArrayList<String>();
+        s = s.toLowerCase();
+
+        for (String key: teacherIdHashMap.keySet()){
+            String lowerKey = key.toLowerCase();
+
+            if (lowerKey.contains(s))
+                similar.add(key);
+        }
+
+        return similar;
+    }
+
+    public ArrayList<String> getAllTeachers(){
+        ArrayList<String> keys = new ArrayList<String>();
+
+        for (String key: teacherIdHashMap.keySet()){
+            keys.add(key);
+        }
+
+        return keys;
+    }
+
     public int getCountRecords(){
         return teacherIdHashMap.size();
     }

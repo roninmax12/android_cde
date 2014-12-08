@@ -70,6 +70,7 @@ public class Global {
         public static boolean isProtocolBackgroundLoaded = false;
         //FragmentSchedule
         public static boolean isFirstOpen = true; // need for automatically choose tab/week
+        public static boolean isScheduleTeacherFragment = false;
         //FragmentScheduleAttestation
         public static boolean isFirstAttestationOpen = true;
     }

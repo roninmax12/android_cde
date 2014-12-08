@@ -1,11 +1,14 @@
 package com.rudik_maksim.cde.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -51,6 +54,7 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt(ARG_POSITION);
+        Global.Configuration.isScheduleTeacherFragment = true;
     }
 
     @Override
@@ -113,6 +117,8 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
         Global.DataLoaded.ScheduleTeacher = false;
         Global.Loading.ScheduleTeacher = false;
         Global.CDEData.ST_DATA.clear();
+
+        Global.Configuration.isScheduleTeacherFragment = false;
     }
 
 

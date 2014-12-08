@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">ЦДО НИУ ИТМО</string>
-    <string name="app_version">2.1</string>
+    <string name="app_version">2.1.1</string>
     <string name="dev_name">Максим Рудик</string>
     <string name="dev_mail">roninmax12@gmail.com</string>
     <string name="dev_site">http://vk.com/maxim_rudik</string>
@@ -26,5 +26,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="authorization">Авторизация</string>
+    <string name="search_hint">Поиск по преподавателям</string>>
 
 </resources>

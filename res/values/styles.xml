@@ -4,6 +4,7 @@
         <item name="android:actionMenuTextColor">#fff</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_action_previous_item</item>
         <item name="android:dialogTheme">@style/DialogTheme</item>
+        <item name="android:actionBarWidgetTheme">@style/MyActionBarWidgetThemeStyle</item>
     </style>
 
     <style name="MyTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
@@ -12,6 +13,12 @@
 
     <style name="MySubTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
         <item name="android:textColor">#a3b5e3</item>
+    </style>
+
+    <style name="MyActionBarWidgetThemeStyle">
+        <item name="android:textColorHint">#a3b5e3</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:editTextColor">#fff</item>
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">

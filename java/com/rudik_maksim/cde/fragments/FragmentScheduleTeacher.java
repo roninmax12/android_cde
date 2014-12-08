@@ -46,6 +46,7 @@ public class FragmentScheduleTeacher extends Fragment {
         View inflatedView =  inflater.inflate(R.layout.fragment_schedule_new, container, false);
 
         rootActivity = getActivity();
+        rootActivity.getActionBar().setTitle(ActivityScheduleTeacher.teacherName);
 
         if (Global.CDEData.WeekNumber != 0){
             String[] days = {"воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"};
