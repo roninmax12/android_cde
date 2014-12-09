@@ -131,7 +131,7 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
             super.onPreExecute();
             imageView.setVisibility(View.VISIBLE);
             imageView.startAnimation(animation);
-            schedule = new ScheduleTeacher();
+            schedule = new ScheduleTeacher(rootActivity);
         }
 
         @Override

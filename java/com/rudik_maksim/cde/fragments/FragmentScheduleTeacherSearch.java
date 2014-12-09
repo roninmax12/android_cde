@@ -55,7 +55,7 @@ public class FragmentScheduleTeacherSearch extends Fragment {
         animation = AnimationUtils.loadAnimation(rootActivity, R.anim.animation_logo);
         fLayout = (FrameLayout)inflatedView.findViewById(R.id.fragmentTemplate_frameLayout);
 
-        final ScheduleTeacher scheduleTeacher = new ScheduleTeacher();
+        final ScheduleTeacher scheduleTeacher = new ScheduleTeacher(rootActivity);
         ArrayList<String> allTeachers = scheduleTeacher.getAllTeachers();
         Collections.sort(allTeachers);
 
@@ -136,7 +136,11 @@ public class FragmentScheduleTeacherSearch extends Fragment {
             String[] fio = teachers[position].split(" ");
 
             holder.txtViewTeacherLastName.setText(fio[0]);
-            holder.txtViewTeacherFirstName.setText(fio[1] + " " + fio[2]);
+
+            if (fio.length == 3)
+                holder.txtViewTeacherFirstName.setText(fio[1] + " " + fio[2]);
+            else
+                holder.txtViewTeacherFirstName.setText(fio[1]);
 
             return convertView;
         }

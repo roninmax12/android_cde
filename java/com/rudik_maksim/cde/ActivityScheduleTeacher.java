@@ -51,7 +51,7 @@ public class ActivityScheduleTeacher extends ActionBarActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (!isSearch){
-            scheduleTeacher = new ScheduleTeacher();
+            scheduleTeacher = new ScheduleTeacher(this);
             teacherId = scheduleTeacher.getTeacherId(teacherName);
             int teachersCount = scheduleTeacher.getCountRecords();
 
@@ -155,7 +155,7 @@ public class ActivityScheduleTeacher extends ActionBarActivity {
     }
 
     void doSearch(String s){
-        final ScheduleTeacher st = new ScheduleTeacher();
+        final ScheduleTeacher st = new ScheduleTeacher(this);
         ArrayList<String> found = st.getSimilarTeachers(s);
         int size = found.size();
 
