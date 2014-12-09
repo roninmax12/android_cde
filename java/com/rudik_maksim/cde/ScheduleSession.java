@@ -46,10 +46,15 @@ public class ScheduleSession {
             boolean consTimeRecorded = false;
             boolean consPlaceRecorded = false;
             boolean consPlaceRecord = false;
+            boolean checkNextItem = false;
 
             String teacher = "";
             String subject = "";
             String str_exam_date = "";
+            String place_str = "";
+            String consPlace_str = "";
+
+            int skippedStep = 0;
 
             for (int j = 0; j < arr.length; j++){
                 String s = "" + arr[j].toString().trim();
@@ -83,15 +88,40 @@ public class ScheduleSession {
                     }
 
                     if (!examPlaceRecorded){
-                        Global.CDEData.SS_EXAM_PLACE.add(s);
+                        place_str = s;
+                        //Global.CDEData.SS_EXAM_PLACE.add(s);
                         examPlaceRecorded = true;
-                        skipNextStep = true;
+                        checkNextItem = true;
+                        //skipNextStep = true;
                         continue;
                     }
 
+                    if (checkNextItem){
+                        if (place_str.equals(s)){
+                            Global.CDEData.SS_EXAM_PLACE.add(place_str);
+                            checkNextItem = false;
+                            continue;
+                        }
+                        else{
+                            place_str += " " + s;
+                            Global.CDEData.SS_EXAM_PLACE.add(place_str);
+                            checkNextItem = false;
+                            skipNextStep = true;
+                            continue;
+                        }
+                    }
+
                     if (skipNextStep){
-                        skipNextStep = false;
-                        continue;
+                        skippedStep++;
+
+                        if (skippedStep == 1)
+                            continue;
+
+                        if (skippedStep == 2){
+                            skipNextStep = false;
+                            skippedStep = 0;
+                            continue;
+                        }
                     }
 
                     if (!subjectRecorded){
@@ -175,8 +205,13 @@ public class ScheduleSession {
                     }
 
                     if (consPlaceRecord){
-                        Global.CDEData.SS_CONS_PLACE.add(s);
-                        break;
+                        if (consPlace_str.length() > 0)
+                            consPlace_str += " " + s;
+                        else
+                            consPlace_str = s;
+
+                        if (j == arr.length - 1)
+                            Global.CDEData.SS_CONS_PLACE.add(consPlace_str);
                     }
 
                 }else

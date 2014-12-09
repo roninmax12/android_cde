@@ -24,6 +24,7 @@ import com.rudik_maksim.cde.fragments.FragmentScheduleTeacher;
 import com.rudik_maksim.cde.fragments.FragmentScheduleTeacherSearch;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Максим on 14.11.2014.
@@ -160,6 +161,7 @@ public class ActivityScheduleTeacher extends ActionBarActivity {
         int size = found.size();
 
         final String[] teachers = new String[size];
+        Collections.sort(found);
         found.toArray(teachers);
 
         FragmentScheduleTeacherSearch.ListViewSearchAdapter adapter = new FragmentScheduleTeacherSearch.ListViewSearchAdapter(this, teachers);
