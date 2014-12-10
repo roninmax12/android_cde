@@ -247,7 +247,13 @@ public class FragmentForPagerSchedule extends Fragment {
                     tv_place.setText(placeInfo);
 
                     tv_time.setText(getRightFormatTime(time[j]));
-                    tv_teacher.setText(person_title[j]);
+
+                    String teacher = person_title[j];
+                    if (teacher.length() < 2){
+                        teacher = "Нет данных";
+                        tv_teacher.setTextColor(Color.parseColor("#aaaaaa"));
+                    }
+                    tv_teacher.setText(teacher);
 
                     //if (!placeInfo.equals("Нет данных")){
                         itemItem.setOnLongClickListener(new View.OnLongClickListener() {

@@ -69,6 +69,8 @@ public class ActivityPoints extends ActionBarActivity
         if (!"".equals(Global.CDEData.login) && !"".equals(Global.CDEData.password)){
             Global.Configuration.show_data_on_cur_sem  = Global.Application.preferences.getBoolean("showDataCurrentSemester", true);
             Global.Configuration.push_enabled          = Global.Application.preferences.getBoolean("enablePushNewPoints",     true);
+//DELETE THIS AFTER FIX BUG
+Global.Configuration.push_enabled = false;
             Global.Configuration.expandListView        = Global.Application.preferences.getBoolean("expandListView",          true);
             // Делаем запрос к серверу на авторизацию
             new AsyncConnection().execute();

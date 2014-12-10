@@ -76,7 +76,7 @@ public class DialogScheduleActionFragment extends DialogFragment {
 
                     case 1:
                         if (teacherName.length() < 7 || teacherName.equals("Нет данных")){
-                            Toast.makeText(getActivity(), "Невозможно показать на карте", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Невозможно показать расписание", Toast.LENGTH_SHORT).show();
                             break;
                         }
                         intent = new Intent(getActivity(), ActivityScheduleTeacher.class);

@@ -36,7 +36,7 @@ public class ScheduleAttestation {
     public void parse(){
         executePost("http://de.ifmo.ru/m/index.php?page=schedule",
                                       "semester=" + getSemesterForGroup() +
-                                      "&title=" + Global.CDEData.CUR_GROUP +
+                                      "&title=" + Global.CDEData.getRightGroupValue() +
                                       "&view=groupsDisp" +
                                       "&year=" + getYear() +
                                       "&year_desystem=" + getYearDeSystem() +

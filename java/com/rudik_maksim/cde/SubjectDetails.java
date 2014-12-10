@@ -26,7 +26,15 @@ public class SubjectDetails extends Connection{
             Global.CDEData.SELECTED_YEAR = Global.CDEData.YEARS.get(Global.CDEData.YEARS.size()-1);
         }
 
-        URL de = new URL("https://de.ifmo.ru/servlet/distributedCDE?Rule=eRegisterStudentProgram&UNIVER=1&APPRENTICESHIP="+Global.CDEData.SELECTED_YEAR+"&ST_GRP="+Global.CDEData.GROUP+"&SYU_ID="+SYU_ID);
+        String hash = "%E8";
+        String gr = "";
+
+        if (Global.CDEData.CUR_GROUP.contains("и")){
+            gr = hash + Global.CDEData.CUR_GROUP.substring(1);
+        }else
+            gr = Global.CDEData.CUR_GROUP;
+
+        URL de = new URL("https://de.ifmo.ru/servlet/distributedCDE?Rule=eRegisterStudentProgram&UNIVER=1&APPRENTICESHIP="+Global.CDEData.SELECTED_YEAR+"&ST_GRP="+gr+"&SYU_ID="+SYU_ID);
 
         TagNode tagNode = new HtmlCleaner().clean(de, "cp1251");
         org.w3c.dom.Document doc = new DomSerializer(new CleanerProperties()).createDOM(tagNode);

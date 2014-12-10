@@ -226,6 +226,18 @@ public class Global {
 
             ParityOfWeek = "";
         }
+
+        public static String getRightGroupValue(){
+            String hash = "%D0%B8";
+            String gr = "";
+
+            if (Global.CDEData.CUR_GROUP.contains("и")){
+                gr = hash + Global.CDEData.CUR_GROUP.substring(1);
+            }else
+                gr = Global.CDEData.CUR_GROUP;
+
+            return gr;
+        }
     }
 
     public static class DataLoaded{

@@ -23,8 +23,14 @@ import javax.xml.xpath.XPathFactory;
  */
 public class ScheduleSession {
     public void parse() throws IOException, ParserConfigurationException, XPathExpressionException {
-        //URL session = new URL("http://www.ifmo.ru/exam_search/1/"+Global.CDEData.CUR_GROUP+"/exam_gr_"+Global.CDEData.CUR_GROUP+".htm");
-        URL session = new URL("http://www.ifmo.ru/ru/exam/0/" + Global.CDEData.CUR_GROUP + "/raspisanie_sessii_" + Global.CDEData.CUR_GROUP + ".htm");
+        String gr = "";
+
+        if (Global.CDEData.CUR_GROUP.contains("и")){
+            gr = "i" + Global.CDEData.CUR_GROUP.substring(1);
+        }else
+            gr = Global.CDEData.CUR_GROUP;
+
+        URL session = new URL("http://www.ifmo.ru/ru/exam/0/" + gr + "/raspisanie_sessii_" + gr + ".htm");
         TagNode tagNode = new HtmlCleaner().clean(session, "utf8");
         org.w3c.dom.Document doc = new DomSerializer(new CleanerProperties()).createDOM(tagNode);
         XPath xpath = XPathFactory.newInstance().newXPath();
@@ -168,6 +174,12 @@ public class ScheduleSession {
                     }
 
                     if (!consRecorded){
+                        if (s.equals("в")){
+                            Global.CDEData.SS_CONS_DATE.add("-");
+                            consRecorded = true;
+                            continue;
+                        }
+
                         if (!consStartRecord){
                             Global.CDEData.SS_CONS_DATE.add(s);
                             consStartRecord = true;
@@ -187,6 +199,17 @@ public class ScheduleSession {
                     }
 
                     if (!consTimeRecorded) {
+                        if (s.contains("Место")){
+                            Global.CDEData.SS_CONS_TIME.add("-");
+                            consTimeRecorded = true;
+
+                            if (j == arr.length - 1){
+                                Global.CDEData.SS_CONS_PLACE.add("-");
+                                break;
+                            }
+                            continue;
+                        }
+
                         Global.CDEData.SS_CONS_TIME.add(s);
                         consTimeRecorded = true;
                         continue;

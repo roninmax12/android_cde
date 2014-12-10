@@ -51,6 +51,10 @@ public class Points extends Connection{
             if (Global.CDEData.CUR_GROUP == null || "".equals(Global.CDEData.CUR_GROUP))
                 Global.CDEData.CUR_GROUP = Global.CDEData.GROUP;
         }
+
+        //if (Global.CDEData.CUR_GROUP.contains("и"))
+        //    Global.CDEData.CUR_GROUP.replace("и","%D0%B8");
+
         //URLS
 
         NodeList urls = (NodeList) xpath.evaluate("//form[@id='FormName']//table[@class='d_table']//tbody//tr//td/a/@onclick",doc, XPathConstants.NODESET);

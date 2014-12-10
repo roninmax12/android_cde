@@ -37,7 +37,7 @@ public class Schedule {
     ArrayList<String> status        = new ArrayList<String>();
 
     public void parse(){
-        String response = executePost("http://www.ifmo.ru/mobile/schedule.php", "login=ifmo01&pass=01ifmo04&gr=" + Global.CDEData.CUR_GROUP);
+        String response = executePost("http://www.ifmo.ru/mobile/schedule.php", "login=ifmo01&pass=01ifmo04&gr=" + Global.CDEData.getRightGroupValue());
 
         JSONParser parser = new JSONParser();
         try{

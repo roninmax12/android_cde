@@ -66,6 +66,12 @@ public class FragmentScheduleAttestation extends Fragment {
     public void onStart(){
         super.onStart();
 
+        if (Global.CDEData.CUR_GROUP.contains("и")){
+            textView.setText("К сожалению, расписание аттестаций для студентов ИХиБТ недоступно из приложения");
+            textView.setVisibility(View.VISIBLE);
+            return;
+        }
+
         if (!Global.DataLoaded.ScheduleAttestation){
             if (!Global.Loading.ScheduleAttestation){
                 Global.Loading.ScheduleAttestation = true;

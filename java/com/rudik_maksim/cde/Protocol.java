@@ -25,7 +25,17 @@ public class Protocol extends Connection {
     public void parse() throws IOException, ParserConfigurationException, XPathExpressionException {
         int lengthYears = Global.CDEData.YEARS.size();
         String currentYear = Global.CDEData.YEARS.get(lengthYears-1);
-        URL de = new URL(host + "servlet/distributedCDE?Rule=eRegisterGetProtokolVariable&UNIVER=1&APPRENTICESHIP="+currentYear+"&ST_GRP="+Global.CDEData.CUR_GROUP+"&PERSONID="+login+"&PROGRAMID=-&PERIOD=28");
+
+        String hash = "%E8";
+        String gr = "";
+
+        if (Global.CDEData.CUR_GROUP.contains("и")){
+            gr = hash + Global.CDEData.CUR_GROUP.substring(1);
+        }else
+            gr = Global.CDEData.CUR_GROUP;
+
+
+        URL de = new URL(host + "servlet/distributedCDE?Rule=eRegisterGetProtokolVariable&UNIVER=1&APPRENTICESHIP="+currentYear+"&ST_GRP="+gr+"&PERSONID="+login+"&PROGRAMID=-&PERIOD=28");
 
         TagNode tagNode = new HtmlCleaner().clean(de, "cp1251");
         org.w3c.dom.Document doc = new DomSerializer(new CleanerProperties()).createDOM(tagNode);
