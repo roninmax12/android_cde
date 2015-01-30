@@ -208,7 +208,6 @@ public class FragmentScheduleAttestation extends Fragment {
                 qSort(titles);
 
             tabIndex = getNearTabIndex(titles);
-
         }
 
         @Override

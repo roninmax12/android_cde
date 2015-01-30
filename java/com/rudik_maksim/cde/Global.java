@@ -71,6 +71,7 @@ public class Global {
         //FragmentSchedule
         public static boolean isFirstOpen = true; // need for automatically choose tab/week
         public static boolean isScheduleTeacherFragment = false;
+        public static boolean isScheduleGroupFragment = false;
         //FragmentScheduleAttestation
         public static boolean isFirstAttestationOpen = true;
     }
@@ -130,6 +131,7 @@ public class Global {
 
         //ScheduleTeacherPage
         public static ArrayList<ArrayList<String>> ST_DATA = new ArrayList<ArrayList<String>>();
+        public static ArrayList<ArrayList<String>> SG_DATA = new ArrayList<ArrayList<String>>();
 
         //ScheduleAttestationPage
             // String - Неделя
@@ -248,6 +250,7 @@ public class Global {
         public static boolean Schedule = false;
         public static boolean ScheduleSession = false;
         public static boolean ScheduleTeacher = false;
+        public static boolean ScheduleGroup = false;
         public static boolean ScheduleAttestation = false;
     }
 
@@ -258,6 +261,7 @@ public class Global {
         public static boolean Schedule = false;
         public static boolean ScheduleSession = false;
         public static boolean ScheduleTeacher = false;
+        public static boolean ScheduleGroup = false;
         public static boolean ScheduleAttestation = false;
     }
 

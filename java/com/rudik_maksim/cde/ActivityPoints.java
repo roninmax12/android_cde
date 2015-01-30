@@ -1,5 +1,6 @@
 package com.rudik_maksim.cde;
 
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
@@ -21,7 +22,6 @@ import com.rudik_maksim.cde.fragments.FragmentSchedule;
 import com.rudik_maksim.cde.fragments.FragmentScheduleAttestation;
 import com.rudik_maksim.cde.fragments.FragmentScheduleSession;
 import com.rudik_maksim.cde.fragments.FragmentSettings;
-import com.rudik_maksim.cde.services.NewPointsNotificationService;
 import com.rudik_maksim.cde.services.ServicePointsNotification;
 
 public class ActivityPoints extends ActionBarActivity
@@ -71,10 +71,9 @@ public class ActivityPoints extends ActionBarActivity
         if (!"".equals(Global.CDEData.login) && !"".equals(Global.CDEData.password)){
             Global.Configuration.show_data_on_cur_sem  = Global.Application.preferences.getBoolean("showDataCurrentSemester", true);
             Global.Configuration.push_enabled          = Global.Application.preferences.getBoolean("enablePushNewPoints",     true);
-//DELETE THIS AFTER FIX BUG
-//Global.Configuration.push_enabled = false;
             Global.Configuration.expandListView        = Global.Application.preferences.getBoolean("expandListView",          true);
-            // Делаем запрос к серверу на авторизацию
+
+            // / Делаем запрос к серверу на авторизацию
             new AsyncConnection().execute();
         }else{
             Intent i = new Intent(this, ActivityLogin.class);
@@ -233,6 +232,7 @@ public class ActivityPoints extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
         switch (item.getItemId()){
             case R.id.action_settings:
                 DialogFragment newFragment = new DialogAboutFragment();
@@ -248,9 +248,15 @@ public class ActivityPoints extends ActionBarActivity
                 }
                 break;
             case R.id.action_schedule_teacher:
-                Intent i = new Intent(this, ActivityScheduleTeacher.class);
+                i = new Intent(this, ActivityScheduleTeacher.class);
                 i.putExtra("search", true);
                 startActivity(i);
+                break;
+
+            case R.id.action_schedule_group:
+                i = new Intent(this, ActivityScheduleGroup.class);
+                startActivity(i);
+                break;
         }
        return super.onOptionsItemSelected(item);
     }

@@ -152,9 +152,11 @@ public class FragmentForPagerSchedule extends Fragment {
             prepareSchedule(false);
         }
 
-        String[] days = {"воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"};
-        Calendar calendar = Calendar.getInstance();
-        rootActivity.getActionBar().setSubtitle(Global.CDEData.WeekNumber + " неделя, " + days[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        if (Global.CDEData.WeekNumber != 0){
+            String[] days = {"воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"};
+            Calendar calendar = Calendar.getInstance();
+            rootActivity.getActionBar().setSubtitle(Global.CDEData.WeekNumber + " неделя, " + days[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        }
     }
 
     public void prepareSchedule(boolean isEvenWeek){
@@ -167,6 +169,7 @@ public class FragmentForPagerSchedule extends Fragment {
 
         if (len == 0){
             Global.DataLoaded.Schedule = false;
+            textView.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -270,7 +273,7 @@ public class FragmentForPagerSchedule extends Fragment {
                                     FragmentTransaction ft = getFragmentManager().beginTransaction();
 
                                     try{
-                                        DialogFragment newFragment = DialogScheduleActionFragment.newInstance(onlyPlace, teacherName);
+                                        DialogFragment newFragment = DialogScheduleActionFragment.newInstance(onlyPlace, teacherName, "");
                                         newFragment.show(ft, "dialog_schedule_action");
                                     }catch (Exception ex){}
                                 }
@@ -352,6 +355,9 @@ public class FragmentForPagerSchedule extends Fragment {
         //9:30-10:50 => 09:30\n10:50
         //8:00-9:20 = > 08:00\n09:20
         String formattedTime = "";
+
+        if (time.equals("День"))
+            return time;
 
         String[] parts = time.split("-");
 

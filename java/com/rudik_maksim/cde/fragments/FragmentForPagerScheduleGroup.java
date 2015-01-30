@@ -1,16 +1,13 @@
 package com.rudik_maksim.cde.fragments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -20,9 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rudik_maksim.cde.ActivityScheduleGroup;
 import com.rudik_maksim.cde.ActivityScheduleTeacher;
 import com.rudik_maksim.cde.Global;
 import com.rudik_maksim.cde.R;
+import com.rudik_maksim.cde.Schedule;
 import com.rudik_maksim.cde.ScheduleTeacher;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ import java.util.HashMap;
 /**
  * Created by Максим on 12.11.2014.
  */
-public class FragmentForPagerScheduleTeacher extends Fragment {
+public class FragmentForPagerScheduleGroup extends Fragment {
     private static final String ARG_POSITION = "position";
     ImageView imageView;
     TextView textView;
@@ -44,8 +43,8 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
 
     private int position;
 
-    public static FragmentForPagerScheduleTeacher newInstance(int position) {
-        FragmentForPagerScheduleTeacher f = new FragmentForPagerScheduleTeacher();
+    public static FragmentForPagerScheduleGroup newInstance(int position) {
+        FragmentForPagerScheduleGroup f = new FragmentForPagerScheduleGroup();
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
         f.setArguments(b);
@@ -56,7 +55,7 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt(ARG_POSITION);
-        Global.Configuration.isScheduleTeacherFragment = true;
+        Global.Configuration.isScheduleGroupFragment = true;
     }
 
     @Override
@@ -98,14 +97,14 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
             return;
         }
 
-        if (!Global.DataLoaded.ScheduleTeacher){
-            if (!Global.Loading.ScheduleTeacher){
-                Global.Loading.ScheduleTeacher = true;
-                new AsyncGetScheduleTeacher().execute();
+        if (!Global.DataLoaded.ScheduleGroup){
+            if (!Global.Loading.ScheduleGroup){
+                Global.Loading.ScheduleGroup = true;
+                new AsyncGetScheduleGroup().execute();
             }
         }
         else{
-            if (!Global.Loading.ScheduleTeacher){
+            if (!Global.Loading.ScheduleGroup){
                 showSchedule(position);
             }
         }
@@ -116,24 +115,26 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
     @Override
     public void onStop(){
         super.onStop();
-        Global.Configuration.isScheduleTeacherFragment = false;
+        Global.Configuration.isScheduleGroupFragment = false;
     }
 
-    class AsyncGetScheduleTeacher extends AsyncTask<Void,Void,Void> {
-        private ScheduleTeacher schedule;
+
+
+    class AsyncGetScheduleGroup extends AsyncTask<Void,Void,Void> {
+        private Schedule schedule;
 
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
             imageView.setVisibility(View.VISIBLE);
             imageView.startAnimation(animation);
-            schedule = new ScheduleTeacher(rootActivity);
+            schedule = new Schedule();
         }
 
         @Override
         protected Void doInBackground(Void... params){
             try{
-                schedule.parse(ActivityScheduleTeacher.teacherId);
+                schedule.parseGroup(ActivityScheduleGroup.groupNumber);
             }catch (Exception ex){}
 
             return null;
@@ -143,14 +144,14 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
         protected void onPostExecute(Void result){
             imageView.setVisibility(View.INVISIBLE);
             imageView.clearAnimation();
-            Global.DataLoaded.ScheduleTeacher = true;
+            Global.DataLoaded.ScheduleGroup = true;
 
             if(Global.Application.currentFragmentId == Global.Configuration.NAV_SCHEDULE){
                 Animation a = AnimationUtils.loadAnimation(rootActivity, R.anim.up_top);
                 linRootLayout.startAnimation(a);
             }
 
-            Global.Loading.ScheduleTeacher = false;
+            Global.Loading.ScheduleGroup = false;
             showSchedule(0);
         }
     }
@@ -174,58 +175,59 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
     public void prepareSchedule(boolean isEvenWeek){
         int len = 0;
         try{
-            len = Global.CDEData.ST_DATA.get(0).size();
+            len = Global.CDEData.SG_DATA.get(0).size();
         }catch (Exception ex){}
 
-        String[] day_week, week_type, time, room, place, title_subject, person_title, status, gr;
+        String[] day_week, week_type, time, room, place, title_subject, person_title, status;
 
         if (len == 0){
-            Global.DataLoaded.ScheduleTeacher = false;
+            Global.DataLoaded.ScheduleGroup = false;
+            textView.setVisibility(View.VISIBLE);
             return;
         }
 
         day_week = new String[len];       // 0 - Monday, 1 - Tuesday ...
         week_type = new String[len];      // 0 - all weeks, 1 - even week, 2 - oven week
-        time = new String[len];           // ex. "9:30-10:50" or "День"
+        time = new String[len];           // ex. "9:30-10:50"
         room = new String[len];
         place = new String[len];          // "Крон" or "Грив" or ""
         title_subject = new String[len];
         person_title = new String[len];
         status = new String[len];         // ex. "Лаб"
-        gr = new String[len];
 
-        Global.CDEData.ST_DATA.get(0).toArray(day_week);
-        Global.CDEData.ST_DATA.get(1).toArray(week_type);
-        Global.CDEData.ST_DATA.get(2).toArray(time);
-        Global.CDEData.ST_DATA.get(3).toArray(room);
-        Global.CDEData.ST_DATA.get(4).toArray(place);
-        Global.CDEData.ST_DATA.get(5).toArray(title_subject);
-        Global.CDEData.ST_DATA.get(6).toArray(person_title);
-        Global.CDEData.ST_DATA.get(7).toArray(status);
-        Global.CDEData.ST_DATA.get(8).toArray(gr);
+        Global.CDEData.SG_DATA.get(0).toArray(day_week);
+        Global.CDEData.SG_DATA.get(1).toArray(week_type);
+        Global.CDEData.SG_DATA.get(2).toArray(time);
+        Global.CDEData.SG_DATA.get(3).toArray(room);
+        Global.CDEData.SG_DATA.get(4).toArray(place);
+        Global.CDEData.SG_DATA.get(5).toArray(title_subject);
+        Global.CDEData.SG_DATA.get(6).toArray(person_title);
+        Global.CDEData.SG_DATA.get(7).toArray(status);
 
+        //int days;
         String[] rightWeekValue = new String[2];
 
         if (isEvenWeek) {
+            //days = getParityDaysCount(0, Global.CDEData.S_DATA.get(0), Global.CDEData.S_DATA.get(1));
             rightWeekValue[0] = "0"; rightWeekValue[1] = "1";
         }
         else {
+            //days = getParityDaysCount(1, Global.CDEData.S_DATA.get(0), Global.CDEData.S_DATA.get(1));
             rightWeekValue[0] = "0"; rightWeekValue[1] = "2";
         }
 
         linSubLayout.removeAllViews();
 
-            int currentDayIndex = -1;
-            int addedDayIndex = -1;
-            boolean needToAddView = false;
-            View item = layInflater.inflate(R.layout.schedule_item, linSubLayout, false);
+        int currentDayIndex = -1;
+        int addedDayIndex = -1;
+        boolean needToAddView = false;
+        View item = layInflater.inflate(R.layout.schedule_item, linSubLayout, false);
 
-            boolean existsSchedule = false;
-            for (int j = 0; j < title_subject.length; j++){
-
-                if (week_type[j].equals(rightWeekValue[0]) || week_type[j].equals(rightWeekValue[1])){
-                    existsSchedule = true;
-                    currentDayIndex = Integer.parseInt(day_week[j]);
+        boolean existsSchedule = false;
+        for (int j = 0; j < title_subject.length; j++){
+            if (week_type[j].equals(rightWeekValue[0]) || week_type[j].equals(rightWeekValue[1])){
+                existsSchedule = true;
+                currentDayIndex = Integer.parseInt(day_week[j]);
 
                 if (currentDayIndex != addedDayIndex){
                     if (needToAddView){
@@ -244,11 +246,11 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
 
                     LinearLayout ll = (LinearLayout)item.findViewById(R.id.schedule_item_linLayoutContent);
 
-                    View itemItem = layInflater.inflate(R.layout.schedule_teacher_listview_item, ll, false);
-                    final TextView tv_subject = (TextView)itemItem.findViewById(R.id.schedule_teacher_listview_item_textview_subject);
-                    final TextView tv_place = (TextView)itemItem.findViewById(R.id.schedule_teacher_listview_item_textview_place);
-                    final TextView tv_time = (TextView)itemItem.findViewById(R.id.schedule_teacher_listview_item_textview_time);
-                    final TextView tv_group = (TextView)itemItem.findViewById(R.id.schedule_teacher_listview_item_textview_group);
+                    View itemItem = layInflater.inflate(R.layout.schedule_listview_item, ll, false);
+                    final TextView tv_subject = (TextView)itemItem.findViewById(R.id.schedule_listview_item_textview_subject);
+                    final TextView tv_place = (TextView)itemItem.findViewById(R.id.schedule_listview_item_textview_place);
+                    final TextView tv_time = (TextView)itemItem.findViewById(R.id.schedule_listview_item_textview_time_and_week);
+                    final TextView tv_teacher = (TextView)itemItem.findViewById(R.id.schedule_listview_item_textview_teacher);
 
                     tv_subject.setText(title_subject[j] + " (" + status[j] + ")");
                     String placeInfo = room[j] + " " + getRightFormatPlace(place[j]);
@@ -261,14 +263,20 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
                     tv_place.setText(placeInfo);
 
                     tv_time.setText(getRightFormatTime(time[j]));
-                    tv_group.setText(gr[j]);
+
+                    String teacher = person_title[j];
+                    if (teacher.length() < 2){
+                        teacher = "Нет данных";
+                        tv_teacher.setTextColor(Color.parseColor("#aaaaaa"));
+                    }
+                    tv_teacher.setText(teacher);
 
                     itemItem.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
                             if (!Global.Application.isFragmentScheduleActionExists){
                                 String onlyPlace = tv_place.getText().toString();
-                                String group = tv_group.getText().toString();
+                                String teacherName = tv_teacher.getText().toString();
                                 int firstSpaceIndex = onlyPlace.indexOf(' ');
                                 String fisrtPart = onlyPlace.substring(0, firstSpaceIndex);
                                 if (fisrtPart.matches(".*\\d.*"))
@@ -277,7 +285,7 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
                                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
                                 try{
-                                    DialogFragment newFragment = DialogScheduleActionFragment.newInstance(onlyPlace, "", group);
+                                    DialogFragment newFragment = DialogScheduleActionFragment.newInstance(onlyPlace, teacherName, "");
                                     newFragment.show(ft, "dialog_schedule_action");
                                 }catch (Exception ex){}
                             }
@@ -292,8 +300,7 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
             }
 
             if (j == title_subject.length - 1){
-                if (addedDayIndex != -1)
-                    linSubLayout.addView(item);
+                linSubLayout.addView(item);
             }
         }
 

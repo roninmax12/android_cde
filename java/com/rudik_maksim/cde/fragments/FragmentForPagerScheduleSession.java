@@ -113,7 +113,7 @@ public class FragmentForPagerScheduleSession extends Fragment {
         @Override
         protected Void doInBackground(Void... params){
             try{
-                ss.parse();
+                ss.parseNew();
             }catch (Exception ex){}
 
             return null;

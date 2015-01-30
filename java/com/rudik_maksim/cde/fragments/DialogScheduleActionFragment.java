@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.rudik_maksim.cde.ActivityScheduleGroup;
 import com.rudik_maksim.cde.ActivityScheduleTeacher;
 import com.rudik_maksim.cde.Global;
 import com.rudik_maksim.cde.R;
@@ -27,12 +28,14 @@ import java.util.Locale;
  * Created by Максим on 15.10.2014.
  */
 public class DialogScheduleActionFragment extends DialogFragment {
+    static boolean isTeacherFragment = true;
 
-    static DialogScheduleActionFragment newInstance(String place, String teacher){
+    static DialogScheduleActionFragment newInstance(String place, String teacher, String group){
         DialogScheduleActionFragment dialog = new DialogScheduleActionFragment();
         Bundle args = new Bundle();
         args.putString("address", place);
         args.putString("teacher", teacher);
+        args.putString("group", group);
         dialog.setArguments(args);
         Global.Application.isFragmentScheduleActionExists = true;
 
@@ -48,14 +51,26 @@ public class DialogScheduleActionFragment extends DialogFragment {
 
         final String address = getArguments().getString("address");
         final String teacherName = getArguments().getString("teacher");
+        final String group = getArguments().getString("group");
 
         View v = inflater.inflate(R.layout.dialog_schedule_action, container, false);
 
         ListView listView = (ListView) v.findViewById(R.id.dialog_schedule_action_listview);
 
-        String item[] = {"Показать на карте", "Расписание преподавателя"};
+        //String item[] = {"Показать на карте", "Расписание преподавателя"};
+        String item[] = new String[2];
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),R.layout.dialog_schedule_action_item, R.id.dialog_schedule_action_item_textview_action, item);
+        if (teacherName.length() > 5){
+            item[0] = "Показать на карте";
+            item[1] = "Расписание преподавателя";
+            isTeacherFragment = true;
+        }else if (group.length() >= 4){
+            item[0] = "Показать на карте";
+            item[1] = "Расписание группы";
+            isTeacherFragment = false;
+        }
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.dialog_schedule_action_item, R.id.dialog_schedule_action_item_textview_action, item);
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,15 +90,23 @@ public class DialogScheduleActionFragment extends DialogFragment {
                         break;
 
                     case 1:
-                        if (teacherName.length() < 7 || teacherName.equals("Нет данных")){
-                            Toast.makeText(getActivity(), "Невозможно показать расписание", Toast.LENGTH_SHORT).show();
+                        if (isTeacherFragment){
+                            if (teacherName.length() < 7 || teacherName.equals("Нет данных")){
+                                Toast.makeText(getActivity(), "Невозможно показать расписание", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                            intent = new Intent(getActivity(), ActivityScheduleTeacher.class);
+                            intent.putExtra("teacherName", teacherName);
+                            startActivity(intent);
+                            dismiss();
+                            break;
+                        }else{
+                            intent = new Intent(getActivity(), ActivityScheduleGroup.class);
+                            intent.putExtra("groupNumber", group);
+                            startActivity(intent);
+                            dismiss();
                             break;
                         }
-                        intent = new Intent(getActivity(), ActivityScheduleTeacher.class);
-                        intent.putExtra("teacherName", teacherName);
-                        startActivity(intent);
-                        dismiss();
-                        break;
                 }
             }
         });

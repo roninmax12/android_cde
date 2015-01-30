@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Максим on 19.03.14.
  */
 public class Connection{
-    protected String host = "http://de.ifmo.ru/";
+    protected String host = "https://de.ifmo.ru/";
     protected String login = "";
     protected String password = "";
     protected CookieStore cStore;
@@ -34,29 +34,29 @@ public class Connection{
         HttpURLConnection conn;
         InputStream stream;
 
-            cManager = new CookieManager();
-            cManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-            CookieHandler.setDefault(cManager);
+        cManager = new CookieManager();
+        cManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cManager);
 
-            conn  = (HttpURLConnection)de.openConnection();
+        conn  = (HttpURLConnection)de.openConnection();
 
-            long len = (long)conn.getContentLength();
-            if (len != 0){
-                stream = new BufferedInputStream(conn.getInputStream());
-                int c;
-                ByteArrayOutputStream b = new ByteArrayOutputStream();
-                while (((c = stream.read())!=-1)){
-                    b.write(c);
-                }
-                String code = b.toString("Cp1251");
-                if (code.contains("Invalid"))
-                    return false;
-
-                cStore =  cManager.getCookieStore();
-                List<HttpCookie> cookies = cStore.getCookies();
-
-                stream.close();
+        long len = (long)conn.getContentLength();
+        if (len != 0){
+            stream = new BufferedInputStream(conn.getInputStream());
+            int c;
+            ByteArrayOutputStream b = new ByteArrayOutputStream();
+            while (((c = stream.read())!=-1)){
+                b.write(c);
             }
+            String code = b.toString("Cp1251");
+            if (code.contains("Invalid"))
+                return false;
+
+            cStore =  cManager.getCookieStore();
+            List<HttpCookie> cookies = cStore.getCookies();
+
+            stream.close();
+        }
 
         Global.Application.SHARED_PREFS_NAME = login + "_cde_prefs";
         Global.Application.FILE_PROTOCOL = login + "_file_protocol.txt";

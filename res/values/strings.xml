@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">ЦДО НИУ ИТМО</string>
-    <string name="app_version">2.1.2</string>
+    <string name="app_version">2.1.4</string>
     <string name="dev_name">Максим Рудик</string>
     <string name="dev_mail">roninmax12@gmail.com</string>
     <string name="dev_site">http://vk.com/maxim_rudik</string>
@@ -15,7 +15,7 @@
     <string name="title_fragmentRecord">Запись в ЦДО</string>
     <string name="title_fragmentSchedule">Расписание занятий</string>
     <string name="title_fragmentScheduleSession">Расписание сессии</string>
-    <string name="title_fragmentScheduleAttestation">Расписание аттестаций</string>>
+    <string name="title_fragmentScheduleAttestation">Расписание аттестаций</string>
     <string name="title_fragmentSettings">Настройки</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -24,6 +24,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="authorization">Авторизация</string>
-    <string name="search_hint">Поиск по преподавателям</string>>
+    <string name="search_hint">Поиск по преподавателям</string>
+    <string name="search_hint_group">Номер группы</string>
 
 </resources>

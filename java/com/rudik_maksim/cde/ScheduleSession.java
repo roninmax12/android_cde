@@ -22,6 +22,7 @@ import javax.xml.xpath.XPathFactory;
  * Created by Максим on 25.04.14.
  */
 public class ScheduleSession {
+    /*
     public void parse() throws IOException, ParserConfigurationException, XPathExpressionException {
         String gr = "";
 
@@ -29,6 +30,9 @@ public class ScheduleSession {
             gr = "i" + Global.CDEData.CUR_GROUP.substring(1);
         }else
             gr = Global.CDEData.CUR_GROUP;
+
+        //DELETE THIS
+        gr = "5251";
 
         URL session = new URL("http://www.ifmo.ru/ru/exam/0/" + gr + "/raspisanie_sessii_" + gr + ".htm");
         TagNode tagNode = new HtmlCleaner().clean(session, "utf8");
@@ -242,6 +246,100 @@ public class ScheduleSession {
                 }else
                     continue;
             }
+        }
+    }*/
+
+    public void parseNew() throws IOException, ParserConfigurationException, XPathExpressionException {
+        String gr = "";
+
+        if (Global.CDEData.CUR_GROUP.contains("и")){
+            gr = "i" + Global.CDEData.CUR_GROUP.substring(1);
+        }else
+            gr = Global.CDEData.CUR_GROUP;
+
+        //DELETE THIS
+        //gr = "4131";
+
+        URL session = new URL("http://www.ifmo.ru/ru/exam/0/" + gr + "/raspisanie_sessii_" + gr + ".htm");
+        TagNode tagNode = new HtmlCleaner().clean(session, "utf8");
+        org.w3c.dom.Document doc = new DomSerializer(new CleanerProperties()).createDOM(tagNode);
+        XPath xpath = XPathFactory.newInstance().newXPath();
+
+        NodeList subjects = (NodeList) xpath.evaluate("//table[@class='rasp_tabl']//tbody//td[@class=\"lesson\"]//dl//dd",doc, XPathConstants.NODESET);
+
+        for (int i = 0; i < subjects.getLength(); i++){
+            String subject_name = subjects.item(i).getTextContent().trim();
+
+            String date = (String) xpath.evaluate("//div["+ (i + 1) +"]/table[@class='rasp_tabl']//tbody//tr//th//span//text()", doc, XPathConstants.STRING);
+            String time = (String) xpath.evaluate("//div["+ (i + 1) +"]/table[@class='rasp_tabl']//tbody//tr//td[@class=\"time\"]//span//text()", doc, XPathConstants.STRING);
+            String room = (String) xpath.evaluate("//div["+ (i + 1) +"]/table[@class='rasp_tabl']//tbody//tr//td[@class=\"room\"]//span//text()", doc, XPathConstants.STRING);
+            String teacher = (String) xpath.evaluate("//div["+ (i + 1) +"]/table[@class='rasp_tabl']//tbody//tr//td[@class=\"lesson\"]//dl//dt//b//text()", doc, XPathConstants.STRING);
+            String cons_str = (String) xpath.evaluate("//div["+ (i + 1) +"]/table[@class='rasp_tabl']//tbody//tr//td[@class=\"lesson\"]//dl//dt[2]//text()", doc, XPathConstants.STRING);
+
+            if (subject_name.length() < 2) subject_name = "-";
+            if (date.length() < 2) date = "-";
+            if (time.length() < 2) time = "-";
+            if (room.length() < 2) room = "-";
+            if (teacher.length() < 2) teacher = "-";
+
+            String cons_date = "-", cons_time = "-", cons_place = "-";
+
+            if (cons_str.length() > 2){
+                String[] arr = cons_str.split(" ");
+
+                boolean cons_date_exist = false;
+                boolean cons_time_exist = false;
+                boolean cons_place_exist = false;
+
+                for (int j = 0; j < arr.length; j++){
+                    if (arr[j].contains("Консультация")){
+                        cons_date_exist = true;
+                        continue;
+                    }
+
+                    if (cons_date_exist){
+                        cons_date = arr[j];
+                        cons_date_exist = false;
+                        continue;
+                    }
+
+                    if (arr[j].contains("в")){
+                        cons_time_exist = true;
+                        continue;
+                    }
+
+                    if (cons_time_exist){
+                        cons_time = arr[j];
+                        cons_time_exist = false;
+                        continue;
+                    }
+
+                    if (arr[j].contains("Место")){
+                        cons_place_exist = true;
+                        continue;
+                    }
+
+                    if (cons_place_exist){
+                        cons_place = arr[j];
+
+                        if (arr.length - j > 1)
+                            cons_place += " " + arr[j+1];
+
+                        cons_place_exist = false;
+                    }
+                }
+            }
+
+            Global.CDEData.SS_SUBJECTS.add(subject_name);
+            Global.CDEData.SS_TEACHERS.add(teacher);
+
+            Global.CDEData.SS_EXAM_DATE.add(date);
+            Global.CDEData.SS_EXAM_TIME.add(time);
+            Global.CDEData.SS_EXAM_PLACE.add(room);
+
+            Global.CDEData.SS_CONS_DATE.add(cons_date);
+            Global.CDEData.SS_CONS_TIME.add(cons_time);
+            Global.CDEData.SS_CONS_PLACE.add(cons_place);
         }
     }
 }

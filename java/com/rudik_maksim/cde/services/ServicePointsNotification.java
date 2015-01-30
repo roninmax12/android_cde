@@ -1,26 +1,21 @@
 package com.rudik_maksim.cde.services;
 
-import android.annotation.TargetApi;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.util.Log;
+//import android.util.Log;
 
 import com.rudik_maksim.cde.ActivityPoints;
 import com.rudik_maksim.cde.Global;
 import com.rudik_maksim.cde.R;
-import com.rudik_maksim.cde.Schedule;
 
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
@@ -28,15 +23,9 @@ import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -50,9 +39,10 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 public class ServicePointsNotification extends IntentService {
-    int repeatInterval = 20000;
+    int repeatInterval = 600000; // 10min
 
     final int NOTIFY_ID = 101;
+    boolean firstStartForLogin = false;
 
     CookieManager cManager;
     CookieStore cStore;
@@ -79,7 +69,7 @@ public class ServicePointsNotification extends IntentService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Log.d(Global.Debug.LOG_TAG, "onstart");
+        //Log.d(Global.Debug.LOG_TAG, "onstart");
         return START_REDELIVER_INTENT;
     }
 
@@ -102,27 +92,33 @@ public class ServicePointsNotification extends IntentService {
     public void onDestroy(){
         super.onDestroy();
         run = false;
-        Log.d(Global.Debug.LOG_TAG, "onDESTROY---------------");
+        //Log.d(Global.Debug.LOG_TAG, "onDESTROY---------------");
     }
 
     void doWork(){
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String sp_protocol = sharedPreferences.getString("shared_protocol", "-"); // it work :)
-        Log.d(Global.Debug.LOG_TAG, "sp_protocol: " + sp_protocol);
+        String sp_protocol = sharedPreferences.getString("shared_protocol_" + login, "-"); // it work :)
+        //Log.d(Global.Debug.LOG_TAG, "sp_protocol: " + sp_protocol);
 
         String[] arr_protocol = sp_protocol.split("_");
 
         if (sp_protocol.length() > 2){
-            Log.d(Global.Debug.LOG_TAG, ">2");
+            //Log.d(Global.Debug.LOG_TAG, ">2");
+            firstStartForLogin = false;
+
             if (arr_protocol.length == 3){
-                Log.d(Global.Debug.LOG_TAG, "==3");
+                //Log.d(Global.Debug.LOG_TAG, "==3");
                 fileSubject = arr_protocol[0];
                 fileDescription = arr_protocol[1];
                 filePoint = arr_protocol[2];
-            }else Log.d(Global.Debug.LOG_TAG, "arr_len: " + arr_protocol.length);
+            }
+        }else{
+            if (sp_protocol.equals("-")){
+                firstStartForLogin = true;
+            }
         }
 
+        //sharedPreferences.edit().clear().commit();
 
         new AsyncGetData().execute();
     }
@@ -132,14 +128,15 @@ public class ServicePointsNotification extends IntentService {
         protected Void doInBackground(Void... voids) {
             try{
                 getData();
-                Log.d(Global.Debug.LOG_TAG, "SERVICE getData()");
-            }catch (Exception ex){onDestroy();}
+                //Log.d(Global.Debug.LOG_TAG, "doInBackground getData() try-catch block");
+            }catch (Exception ex){}
             return null;
         }
     }
 
     public boolean Connect() throws IOException {
-        URL de = new URL("http://de.ifmo.ru/servlet/?Rule=LOGON&LOGIN="+login+"&PASSWD="+password);
+        URL de = new URL("https://de.ifmo.ru/servlet/?Rule=LOGON&LOGIN="+login+"&PASSWD="+password);
+        //Log.d(Global.Debug.LOG_TAG, "Connect() => login="+login+", password="+password);
         HttpURLConnection conn;
         InputStream stream;
 
@@ -165,14 +162,14 @@ public class ServicePointsNotification extends IntentService {
 
             stream.close();
 
-            Log.d(Global.Debug.LOG_TAG, "SERVICE connect()");
+            //Log.d(Global.Debug.LOG_TAG, "SERVICE connect()");
         }
 
         return true;
     }
 
     public void getData() throws IOException, ParserConfigurationException, XPathExpressionException {
-        Log.d(Global.Debug.LOG_TAG, "SERVICE getData()");
+        //Log.d(Global.Debug.LOG_TAG, "SERVICE getData()");
         /*
         if internet is off then this method will return java.net.UnknownHostException
         */
@@ -186,20 +183,31 @@ public class ServicePointsNotification extends IntentService {
                 lastSubject = (String) xpath.evaluate("//div[@class='d_text']//table[@class='d_table']//tbody//tr[2]//td[3]//text()",doc, javax.xml.xpath.XPathConstants.STRING);
                 lastDescription = (String) xpath.evaluate("//div[@class='d_text']//table[@class='d_table']//tbody//tr[2]//td[4]//text()",doc, javax.xml.xpath.XPathConstants.STRING);
                 lastPoint = (String) xpath.evaluate("//div[@class='d_text']//table[@class='d_table']//tbody//tr[2]//td[5]//text()",doc, javax.xml.xpath.XPathConstants.STRING);
-            }catch (Exception ex){onDestroy();}
+            }catch (Exception ex){
+                //Log.d(Global.Debug.LOG_TAG, "exception found");
+                return;
+            }
 
             int fisrtIndex = lastSubject.indexOf('(');
             lastSubject = lastSubject.substring(0,fisrtIndex-1);
 
-            Log.d(Global.Debug.LOG_TAG, "FILE: " + fileSubject + " " + fileDescription + " " + filePoint);
-            Log.d(Global.Debug.LOG_TAG, "LAST: " + lastSubject + " " + lastDescription + " " + lastPoint);
+            //Log.d(Global.Debug.LOG_TAG, "FILE: " + fileSubject + " " + fileDescription + " " + filePoint);
+            //Log.d(Global.Debug.LOG_TAG, "LAST: " + lastSubject + " " + lastDescription + " " + lastPoint);
 
+            if (firstStartForLogin){
+                if ( !(lastSubject.equals("") || lastDescription.equals("") || lastPoint.equals("")) ){
+                    updateFile(lastSubject, lastDescription, lastPoint);
+                    firstStartForLogin = false;
+                    return;
+                }
+                return;
+            }
 
             if ( (fileSubject.equals("") || fileDescription.equals("") || filePoint.equals("")) ){
                 //file is empty
                 if ( !(lastSubject.equals("") || lastDescription.equals("") || lastPoint.equals("")) ){
                     //data is not empty
-                    setNotification(lastSubject);
+                    setNotification(lastSubject, lastDescription, lastPoint);
                     updateFile(lastSubject, lastDescription, lastPoint);
                 }
             }else{
@@ -207,7 +215,7 @@ public class ServicePointsNotification extends IntentService {
                 if ( !(lastSubject.equals("") || lastDescription.equals("") || lastPoint.equals("")) ){
                     //data is not empty
                     if (!lastPoint.equals(filePoint) || !lastSubject.equals(fileSubject) || !lastDescription.equals(fileDescription)){
-                        setNotification(lastSubject);
+                        setNotification(lastSubject, lastDescription, lastPoint);
                         updateFile(lastSubject, lastDescription, lastPoint);
                     }
                 }
@@ -215,8 +223,8 @@ public class ServicePointsNotification extends IntentService {
         }
     }
 
-    public void setNotification(String subject){
-        Log.d(Global.Debug.LOG_TAG, "SERVICE setNotification()");
+    public void setNotification(String subject, String description, String point){
+        //Log.d(Global.Debug.LOG_TAG, "SERVICE setNotification()");
         Context context = getApplicationContext();
 
         Intent notificationIntent = new Intent(context, ActivityPoints.class);
@@ -236,19 +244,17 @@ public class ServicePointsNotification extends IntentService {
                 .setTicker("Проставлены новые баллы!")
                 .setWhen(System.currentTimeMillis()) // java.lang.System.currentTimeMillis()
                 .setAutoCancel(true)
-                .setContentTitle("ЦДО НИУ ИТМО")
-                .setContentText(subject); // Текст уведомленимя
+                .setContentTitle(subject)
+                .setContentText(description + ": "+ point); // Текст уведомленимя
 
         Notification n = builder.getNotification();
         n.defaults = Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND;
 
         nm.notify(NOTIFY_ID, n);
-
-        // Необходимо еще обновить информацию в файле
     }
 
     void updateFile(String lastSubject, String lastDescription, String lastPoint){
-        sharedPreferences.edit().putString("shared_protocol", lastSubject + "_" + lastDescription + "_" + lastPoint).commit();
+        sharedPreferences.edit().putString("shared_protocol_"+login, lastSubject + "_" + lastDescription + "_" + lastPoint).commit();
     }
 
 }

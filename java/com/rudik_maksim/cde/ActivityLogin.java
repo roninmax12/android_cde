@@ -123,6 +123,9 @@ public class ActivityLogin extends ActionBarActivity{
             editor.putString("login", login);
             editor.putString("password", password);
             editor.commit();
+
+            Global.CDEData.login = login;
+            Global.CDEData.password = password;
         }
         catch (Throwable t) {
             return;
@@ -208,6 +211,8 @@ public class ActivityLogin extends ActionBarActivity{
                 btnConnect.setEnabled(true);
             }
             else{
+                Global.CDEData.clearAllData();
+
                 savePrefs(login, password);
                 Global.Application.authorized = true;
 
@@ -215,7 +220,6 @@ public class ActivityLogin extends ActionBarActivity{
                 Global.Configuration.push_enabled          = Global.Application.preferences.getBoolean("enablePushNewPoints",     true);
                 Global.Configuration.expandListView        = Global.Application.preferences.getBoolean("expandListView",          true);
 
-                Global.CDEData.clearAllData();
                 Intent intent = new Intent(ActivityLogin.this, ActivityPoints.class);
                 startActivity(intent);
                 finish();

@@ -77,12 +77,11 @@ public class ListViewSettingsAdapter extends BaseAdapter {
         if (position == 0){
             holder.chkBox.setChecked(Global.Configuration.show_data_on_cur_sem);
         }
+
         if (position == 1){
             holder.chkBox.setChecked(Global.Configuration.push_enabled);
-//DELETE THIS AFTER FIX BUG
-//holder.chkBox.setChecked(false);
-//holder.chkBox.setEnabled(false);
         }
+
         if (position == 2){
             holder.chkBox.setChecked(Global.Configuration.expandListView);
         }

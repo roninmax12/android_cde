@@ -83,6 +83,46 @@ public class Schedule {
         };
     }
 
+    public void parseGroup(String group){
+        String hash = "%D0%B8";
+
+        if (group.contains("и"))
+            group = hash + group.substring(1);
+
+        String response = executePost("http://www.ifmo.ru/mobile/schedule.php", "login=ifmo01&pass=01ifmo04&gr=" + group);
+
+        JSONParser parser = new JSONParser();
+        try{
+            Object obj = parser.parse(response);
+            JSONArray jsonArray = (JSONArray) obj;
+
+            for (int i = 0; i < jsonArray.size(); i++){
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+
+                day_week.add(jsonObject.get("day_week").toString());
+                week_type.add(jsonObject.get("week_type").toString());
+                time.add(jsonObject.get("time").toString());
+                room.add(jsonObject.get("room").toString());
+                place.add(jsonObject.get("place").toString());
+                title_subject.add(jsonObject.get("title_subject").toString());
+                person_title.add(jsonObject.get("person_title").toString());
+                status.add(jsonObject.get("status").toString());
+            }
+
+            Global.CDEData.SG_DATA.add(day_week);
+            Global.CDEData.SG_DATA.add(week_type);
+            Global.CDEData.SG_DATA.add(time);
+            Global.CDEData.SG_DATA.add(room);
+            Global.CDEData.SG_DATA.add(place);
+            Global.CDEData.SG_DATA.add(title_subject);
+            Global.CDEData.SG_DATA.add(person_title);
+            Global.CDEData.SG_DATA.add(status);
+
+        }catch (Exception ex){
+            Log.d(Global.Debug.LOG_TAG, "error parse scheduleNew: " + ex.toString());
+        };
+    }
+
     public String executePost(String targetURL, String urlParameters){
         URL url;
         HttpURLConnection connection = null;
