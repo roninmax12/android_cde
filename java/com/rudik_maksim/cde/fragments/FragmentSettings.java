@@ -41,12 +41,12 @@ public class FragmentSettings extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckBox chk = (CheckBox) view.findViewById(R.id.settings_row_checkbox);
 //DELETE THIS AFTER FIX BUG
-if (position != 1){ // PUSH OFF
+//if (position != 1){ // PUSH OFF
                     if (chk.isChecked())
                         chk.setChecked(false);
                     else
                         chk.setChecked(true);
-}
+//}
             }
         });
 

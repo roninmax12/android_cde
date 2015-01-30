@@ -32,24 +32,22 @@ public class FragmentRecordCDE extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_record_cde, container, false);
-    }
+        View inflatedView = inflater.inflate(R.layout.fragment_record_cde, container, false);
 
-    @Override
-    public void onStart(){
-        super.onStart();
         rootActivity = getActivity();
         rootActivity.getActionBar().setTitle(R.string.title_fragmentRecord);
         rootActivity.getActionBar().setSubtitle(null);
 
-        imageView = (ImageView)getView().findViewById(R.id.fragmentRecord_imageView);
-        webView = (WebView)getView().findViewById(R.id.fragmentRecord_webView);
+        imageView = (ImageView)inflatedView.findViewById(R.id.fragmentRecord_imageView);
+        webView = (WebView)inflatedView.findViewById(R.id.fragmentRecord_webView);
         animation = AnimationUtils.loadAnimation(rootActivity, R.anim.animation_logo);
-        fLayout = (FrameLayout)getView().findViewById(R.id.fragmentRecord_frameLayout);
+        fLayout = (FrameLayout)inflatedView.findViewById(R.id.fragmentRecord_frameLayout);
 
         Global.Application.currentFragmentId = Global.Configuration.NAV_RECORD_CDE;
 
         loadUrl();
+
+        return inflatedView;
     }
 
     public void loadUrl(){

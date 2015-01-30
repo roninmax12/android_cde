@@ -101,12 +101,12 @@ public class ActivityScheduleTeacher extends ActionBarActivity {
             return true;
         }
         if (id == R.id.search){
-            if (Global.Configuration.isScheduleTeacherFragment){
+            //if (Global.Configuration.isScheduleTeacherFragment){
                 android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new FragmentScheduleTeacherSearch())
                         .commit();
-            }
+            //}
         }
 
         return super.onOptionsItemSelected(item);
@@ -117,13 +117,15 @@ public class ActivityScheduleTeacher extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_schedule_teacher, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        final MenuItem searchMenuItem = menu.findItem(R.id.search);
+        searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                return false;
+                searchView.clearFocus();
+                return true;
             }
 
             @Override
@@ -135,10 +137,20 @@ public class ActivityScheduleTeacher extends ActionBarActivity {
                             .commit();
                 }
 
-                if (s.length() >= 2)
+                if (s.length() >= 1)
                     doSearch(s);
 
                 return false;
+            }
+        });
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean queryTextFocused) {
+                if(!queryTextFocused) {
+                    searchMenuItem.collapseActionView();
+                    searchView.setQuery("", false);
+                }
             }
         });
 
@@ -151,7 +163,12 @@ public class ActivityScheduleTeacher extends ActionBarActivity {
         if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // Здесь будет храниться то, что пользователь ввёл в поисковой строке
             String search = intent.getStringExtra(SearchManager.QUERY);
-
+            try {
+                TextView text = (TextView) this.findViewById(R.id.search_src_text);
+                text.setText(search);
+            } catch (IllegalStateException ex){Log.d(Global.Debug.LOG_TAG, ex.getStackTrace().toString());}
+            
+            doSearch(search);
         }
     }
 

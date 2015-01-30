@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,6 +91,7 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
     public void onResume()
     {
         super.onResume();
+
         if (!getUserVisibleHint())
         {
             return;
@@ -113,11 +115,6 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
     @Override
     public void onStop(){
         super.onStop();
-
-        Global.DataLoaded.ScheduleTeacher = false;
-        Global.Loading.ScheduleTeacher = false;
-        Global.CDEData.ST_DATA.clear();
-
         Global.Configuration.isScheduleTeacherFragment = false;
     }
 
@@ -188,7 +185,7 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
 
         day_week = new String[len];       // 0 - Monday, 1 - Tuesday ...
         week_type = new String[len];      // 0 - all weeks, 1 - even week, 2 - oven week
-        time = new String[len];           // ex. "9:30-10:50"
+        time = new String[len];           // ex. "9:30-10:50" or "День"
         room = new String[len];
         place = new String[len];          // "Крон" or "Грив" or ""
         title_subject = new String[len];
@@ -338,6 +335,9 @@ public class FragmentForPagerScheduleTeacher extends Fragment {
         //9:30-10:50 => 09:30\n10:50
         //8:00-9:20 = > 08:00\n09:20
         String formattedTime = "";
+
+        if (time.equals("День"))
+            return time;
 
         String[] parts = time.split("-");
 

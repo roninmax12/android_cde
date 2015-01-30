@@ -39,6 +39,8 @@ public class Points extends Connection{
         TagNode tagNode = new HtmlCleaner().clean(de, "cp1251");
         org.w3c.dom.Document doc = new DomSerializer(new CleanerProperties()).createDOM(tagNode);
 
+        Global.CDEData.clearPointsData();
+
         XPath xpath = XPathFactory.newInstance().newXPath();
         //YEARS
         NodeList years = (NodeList) xpath.evaluate("//table[@class='d_table']//tbody//tr//td//select[@name='APPRENTICESHIP']//option/text()",doc, XPathConstants.NODESET);

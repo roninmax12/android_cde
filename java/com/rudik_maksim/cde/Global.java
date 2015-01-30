@@ -82,6 +82,7 @@ public class Global {
         public static String GROUP = null;
         public static String CUR_GROUP = null;
         public static String SELECTED_YEAR = null;
+
         public static ArrayList<String> YEARS = new ArrayList<String>();
         public static ArrayList<String> SUBJECTS1 = new ArrayList<String>();
         public static ArrayList<String> POINTS1 = new ArrayList<String>();

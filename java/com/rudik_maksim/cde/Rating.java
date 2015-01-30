@@ -1,7 +1,5 @@
 package com.rudik_maksim.cde;
 
-import android.os.AsyncTask;
-
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
@@ -22,7 +20,7 @@ import javax.xml.xpath.XPathFactory;
  */
 public class Rating extends Connection {
     public void parse() throws IOException, ParserConfigurationException, XPathExpressionException {
-        URL de = new URL(host + "servlet/distributedCDE?Rule=REP_SHOWREPORTPARAMFORM&REP_ID=1441");
+        URL de = new URL(host + "servlet/distributedCDE?Rule=REP_EXECUTE_PRINT&REP_ID=1441");
 
         TagNode tagNode = new HtmlCleaner().clean(de, "cp1251");
         org.w3c.dom.Document doc = new DomSerializer(new CleanerProperties()).createDOM(tagNode);

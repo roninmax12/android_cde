@@ -12,8 +12,10 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.rudik_maksim.cde.ActivityPoints;
+import com.rudik_maksim.cde.Global;
 import com.rudik_maksim.cde.R;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
@@ -40,7 +42,7 @@ import javax.xml.xpath.XPathFactory;
  * Created by Максим on 30.04.14.
  */
 public class NewPointsNotificationService extends Service {
-    final int repeatInterval = 900000; //ms (60000ms = 1min)
+    final int repeatInterval = 20000; //ms (60000ms = 1min) was 900000
     final int NOTIFY_ID = 101;
 
     CookieManager cManager;
@@ -58,11 +60,14 @@ public class NewPointsNotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d(Global.Debug.LOG_TAG, "SERVICE onCreate");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        Log.d(Global.Debug.LOG_TAG, "SERVICE onDestroy");
 
         new Thread(new Runnable() {
             @Override
@@ -81,12 +86,15 @@ public class NewPointsNotificationService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         try{
+
             login         = intent.getStringExtra("login");
             password      = intent.getStringExtra("password");
             file_protocol = intent.getStringExtra("file_protocol");
 
+            Log.d(Global.Debug.LOG_TAG, "SERVICE onStartCommand success");
+
             new AsyncGetData().execute();
-        }catch (Exception ex){}
+        }catch (Exception ex){ Log.d(Global.Debug.LOG_TAG, "SERVICE onStartCommand failed");}
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -95,6 +103,7 @@ public class NewPointsNotificationService extends Service {
         protected Void doInBackground(Void... voids) {
             try{
                 getData();
+                Log.d(Global.Debug.LOG_TAG, "SERVICE getData()");
             }catch (Exception ex){onDestroy();}
             return null;
         }
@@ -126,6 +135,8 @@ public class NewPointsNotificationService extends Service {
                 cStore =  cManager.getCookieStore();
 
                 stream.close();
+
+                Log.d(Global.Debug.LOG_TAG, "SERVICE connect()");
             }
 
             return true;
@@ -133,6 +144,7 @@ public class NewPointsNotificationService extends Service {
 
     @TargetApi(Build.VERSION_CODES.FROYO)
     public void getData() throws IOException, ParserConfigurationException, XPathExpressionException {
+        Log.d(Global.Debug.LOG_TAG, "SERVICE getData()");
         /*
         if internet is off then this method will return java.net.UnknownHostException
         */
@@ -197,6 +209,7 @@ public class NewPointsNotificationService extends Service {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void setNotification(String subject){
+        Log.d(Global.Debug.LOG_TAG, "SERVICE setNotification()");
         Context context = getApplicationContext();
 
         Intent notificationIntent = new Intent(context, ActivityPoints.class);
@@ -223,5 +236,7 @@ public class NewPointsNotificationService extends Service {
         n.defaults = Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND;
 
         nm.notify(NOTIFY_ID, n);
+
+        // Необходимо еще обновить информацию в файле
     }
 }

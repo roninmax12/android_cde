@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,9 @@ public class FragmentScheduleTeacher extends Fragment {
             Calendar calendar = Calendar.getInstance();
             rootActivity.getActionBar().setSubtitle(Global.CDEData.WeekNumber + " неделя, " + days[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
         }
+
+        Global.DataLoaded.ScheduleTeacher = false;
+        Global.CDEData.ST_DATA.clear();
 
         tabs = (PagerSlidingTabStrip) inflatedView.findViewById(R.id.fragment_schedule_tabs);
         pager = (ViewPager) inflatedView.findViewById(R.id.fragment_schedule_pager);

@@ -2,6 +2,8 @@ package com.rudik_maksim.cde.fragments;
 
 import android.app.Activity;
 //import android.app.Fragment;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -311,7 +313,11 @@ public class FragmentPoints extends Fragment {
         /*
         * This method needs for NewPointsNotificationService
         * */
-        new Thread(new Runnable() {
+
+        Global.Application.preferences.edit().putString("shared_protocol", subject + "_" + description + "_" + userPoint).commit();
+
+
+         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {

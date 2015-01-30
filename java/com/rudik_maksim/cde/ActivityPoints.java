@@ -22,6 +22,7 @@ import com.rudik_maksim.cde.fragments.FragmentScheduleAttestation;
 import com.rudik_maksim.cde.fragments.FragmentScheduleSession;
 import com.rudik_maksim.cde.fragments.FragmentSettings;
 import com.rudik_maksim.cde.services.NewPointsNotificationService;
+import com.rudik_maksim.cde.services.ServicePointsNotification;
 
 public class ActivityPoints extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks{
@@ -52,7 +53,8 @@ public class ActivityPoints extends ActionBarActivity
                 R.id.navigation_drawer,
                (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        serviceIntent = new Intent(this, NewPointsNotificationService.class);
+        //serviceIntent = new Intent(this, NewPointsNotificationService.class);
+        serviceIntent = new Intent(this, ServicePointsNotification.class);
 
         Global.Application.preferences = getSharedPreferences(Global.Application.SHARED_PREFS_NAME, MODE_PRIVATE);
 
@@ -70,7 +72,7 @@ public class ActivityPoints extends ActionBarActivity
             Global.Configuration.show_data_on_cur_sem  = Global.Application.preferences.getBoolean("showDataCurrentSemester", true);
             Global.Configuration.push_enabled          = Global.Application.preferences.getBoolean("enablePushNewPoints",     true);
 //DELETE THIS AFTER FIX BUG
-Global.Configuration.push_enabled = false;
+//Global.Configuration.push_enabled = false;
             Global.Configuration.expandListView        = Global.Application.preferences.getBoolean("expandListView",          true);
             // Делаем запрос к серверу на авторизацию
             new AsyncConnection().execute();
@@ -108,6 +110,15 @@ Global.Configuration.push_enabled = false;
             }
             else{
                 Global.Application.authorized = true;
+
+                if (!Global.DataLoaded.Points && !Global.Loading.Points){
+                    Global.Application.fragment = new FragmentPoints();
+
+                    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, Global.Application.fragment)
+                            .commit();
+                }
             }
         }
     }
@@ -125,6 +136,7 @@ Global.Configuration.push_enabled = false;
             serviceIntent.putExtra("login",         Global.CDEData.login);
             serviceIntent.putExtra("password",      Global.CDEData.password);
             serviceIntent.putExtra("file_protocol", Global.Application.FILE_PROTOCOL);
+
             startService(serviceIntent);
         }
         else

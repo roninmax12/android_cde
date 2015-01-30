@@ -53,6 +53,7 @@ public class ScheduleSession {
             boolean consPlaceRecorded = false;
             boolean consPlaceRecord = false;
             boolean checkNextItem = false;
+            boolean first_v = true;
 
             String teacher = "";
             String subject = "";
@@ -174,7 +175,7 @@ public class ScheduleSession {
                     }
 
                     if (!consRecorded){
-                        if (s.equals("в")){
+                        if (s.equals("в") && first_v){
                             Global.CDEData.SS_CONS_DATE.add("-");
                             consRecorded = true;
                             continue;
@@ -183,6 +184,7 @@ public class ScheduleSession {
                         if (!consStartRecord){
                             Global.CDEData.SS_CONS_DATE.add(s);
                             consStartRecord = true;
+                            first_v = false;
                             continue;
                         }else{
                             if (s.contains("в")){

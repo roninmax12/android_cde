@@ -29,10 +29,10 @@ public class SubjectDetails extends Connection{
         String hash = "%E8";
         String gr = "";
 
-        if (Global.CDEData.CUR_GROUP.contains("и")){
-            gr = hash + Global.CDEData.CUR_GROUP.substring(1);
+        if (Global.CDEData.GROUP.contains("и")){
+            gr = hash + Global.CDEData.GROUP.substring(1);
         }else
-            gr = Global.CDEData.CUR_GROUP;
+            gr = Global.CDEData.GROUP;
 
         URL de = new URL("https://de.ifmo.ru/servlet/distributedCDE?Rule=eRegisterStudentProgram&UNIVER=1&APPRENTICESHIP="+Global.CDEData.SELECTED_YEAR+"&ST_GRP="+gr+"&SYU_ID="+SYU_ID);
 

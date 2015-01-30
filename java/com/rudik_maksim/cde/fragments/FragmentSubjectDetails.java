@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,24 +37,21 @@ public class FragmentSubjectDetails extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_subject_details, container, false);
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
+        View inflatedView = inflater.inflate(R.layout.fragment_subject_details, container, false);
 
         rootActivity = getActivity();
 
-        ivAnimation = (ImageView)getView().findViewById(R.id.sub_det_imageView);
-        lview = (ListView)getView().findViewById(R.id.sub_det_listView);
+        ivAnimation = (ImageView)inflatedView.findViewById(R.id.sub_det_imageView);
+        lview = (ListView)inflatedView.findViewById(R.id.sub_det_listView);
         animation = AnimationUtils.loadAnimation(rootActivity, R.anim.animation_logo);
-        tvSSMessage = (TextView)getView().findViewById(R.id.textViewSSMessage);
-        fLayout = (FrameLayout)getView().findViewById(R.id.fragmentSubjectDetails_frameLayout);
+        tvSSMessage = (TextView)inflatedView.findViewById(R.id.textViewSSMessage);
+        fLayout = (FrameLayout)inflatedView.findViewById(R.id.fragmentSubjectDetails_frameLayout);
 
         Global.Application.currentFragmentId = fragmentID;
 
         new AsyncGetSubjectDetailsInfo().execute();
+
+        return inflatedView;
     }
 
     class AsyncGetSubjectDetailsInfo extends AsyncTask<Void,Void,Void> {
